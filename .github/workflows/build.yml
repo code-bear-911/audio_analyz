@@ -10,12 +10,14 @@ jobs:
       - name: Checkout repository 
         uses: actions/checkout@v3 
  
-      - name: Create valid gradlew file 
+      - name: Create gradlew script 
         run: | 
           echo '#!/bin/sh' > gradlew 
           echo 'DIRNAME=$(dirname "$0")' >> gradlew 
           echo 'exec java -jar "$DIRNAME/gradle/wrapper/gradle-wrapper.jar" "$@"' >> gradlew 
-          chmod +x gradlew 
+ 
+      - name: Make gradlew executable 
+        run: chmod +x gradlew 
  
       - name: Fix gradle-wrapper.jar permissions 
         run: chmod 644 gradle/wrapper/gradle-wrapper.jar 

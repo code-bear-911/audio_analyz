@@ -10,29 +10,27 @@ jobs:
       - name: Checkout repository 
         uses: actions/checkout@v3 
  
-      - name: Replace gradlew with valid script 
+      - name: Create valid gradlew file 
         run: | 
-          echo '#!/bin/sh' > ./VoiceDenoiserApp/gradlew 
-          echo 'DIRNAME=$(dirname "$0")' >> ./VoiceDenoiserApp/gradlew 
-          echo 'exec java -jar "$DIRNAME/gradle/wrapper/gradle-wrapper.jar" "$@"' >> 
-./VoiceDenoiserApp/gradlew 
-          chmod +x ./VoiceDenoiserApp/gradlew 
+          echo '#!/bin/sh' > gradlew 
+          echo 'DIRNAME=$(dirname "$0")' >> gradlew 
+          echo 'exec java -jar "$DIRNAME/gradle/wrapper/gradle-wrapper.jar" "$@"' >> gradlew 
+          chmod +x gradlew 
  
       - name: Fix gradle-wrapper.jar permissions 
-        run: chmod 644 ./VoiceDenoiserApp/gradle/wrapper/gradle-wrapper.jar 
+        run: chmod 644 gradle/wrapper/gradle-wrapper.jar 
  
-      - name: Setup JDK 17 
+      - name: Set up JDK 17 
         uses: actions/setup-java@v3 
         with: 
           distribution: temurin 
           java-version: '17' 
  
-      - name: Build APK 
+      - name: Build the APK 
         run: ./gradlew assembleRelease 
-        working-directory: VoiceDenoiserApp 
  
       - name: Upload APK artifact 
         uses: actions/upload-artifact@v4 
         with: 
-          name: VoiceDenoiserApp 
-          path: VoiceDenoiserApp/app/build/outputs/apk/release/app-release.apk
+          name: AudioAnalyzApp 
+          path: app/build/outputs/apk/release/app-release.apk

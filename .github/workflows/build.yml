@@ -12,11 +12,10 @@ jobs:
  
       - name: Replace gradlew with valid script 
         run: | 
-          cat << 'EOF' > ./VoiceDenoiserApp/gradlew 
-          #!/bin/sh 
-          DIRNAME=$(dirname "$0") 
-          exec java -jar "$DIRNAME/gradle/wrapper/gradle-wrapper.jar" "$@" 
-          EOF 
+          echo '#!/bin/sh' > ./VoiceDenoiserApp/gradlew 
+          echo 'DIRNAME=$(dirname "$0")' >> ./VoiceDenoiserApp/gradlew 
+          echo 'exec java -jar "$DIRNAME/gradle/wrapper/gradle-wrapper.jar" "$@"' >> 
+./VoiceDenoiserApp/gradlew 
           chmod +x ./VoiceDenoiserApp/gradlew 
  
       - name: Fix gradle-wrapper.jar permissions 
